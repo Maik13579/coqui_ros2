@@ -1,4 +1,4 @@
-# Coqui ROS2
+# Coqui TTS ROS2
 WIP
 
 ## Build
