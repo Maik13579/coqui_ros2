@@ -1,9 +1,11 @@
 # Goal
-string text # Text to synthesize
+string text # Text to speak
 string language # Language code (e.g. en)
 string speaker_wave # Path to speaker wav file
 
 float32 wait_before_speaking # Wait before speaking in seconds
+# actual wait time is wait_before_speaking - generation time
+# so if generation takes longer than we don't wait at all
 
 ---
 # Result
@@ -14,3 +16,9 @@ string message # Error message
 ---
 # Feedback
 
+uint8 stage # One of the status codes below
+
+uint8 STARTED=0            # Initial state
+uint8 GENERATED_AUDIO=1    # Audio has been generated, waiting if needed
+uint8 WAIT_DONE=2          # Audio starts playing
+uint8 AUDIO_PLAYED=3       # Audio has finished playing
