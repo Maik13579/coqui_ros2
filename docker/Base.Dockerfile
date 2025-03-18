@@ -9,6 +9,7 @@ FROM ${BASE}
 ARG ROS_DISTRO
 ENV ROS_DISTRO=$ROS_DISTRO
 ENV DEBIAN_FRONTEND=noninteractive
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 # Install locales, curl, gnupg, and lsb-release
 RUN apt-get update && apt-get install -y \
@@ -31,6 +32,7 @@ RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o 
 # Install ROS2 Desktop and additional dependencies
 RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-desktop \
+    ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     python3-rosdep \
     python3-colcon-common-extensions \
     && rm -rf /var/lib/apt/lists/*
@@ -38,7 +40,7 @@ RUN apt-get update && apt-get install -y \
 # Initialize rosdep
 RUN rosdep init && rosdep update
 
-COPY ros_entrypoint.sh /ros_entrypoint.sh
+COPY docker/ros_entrypoint.sh /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
