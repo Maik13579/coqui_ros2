@@ -1,4 +1,4 @@
-ARG BASE_IMAGE
+ARG BASE_IMAGE=text_to_suppress_warning
 FROM ${BASE_IMAGE}
 
 # Install Dependencies
