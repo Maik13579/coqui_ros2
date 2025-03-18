@@ -75,16 +75,6 @@ class TTSNode(Node):
         speaker = goal_handle.request.speaker
         if speaker == '':
             speaker = None
-            if self.tts.is_multi_speaker:
-                error_msg = f'No speaker specified and multi-speaker model is used. \nOptions:'
-                for speaker in self.tts.speakers:
-                    error_msg += f'\n- {speaker}'
-                self.get_logger().error(error_msg)
-                goal_handle.abort()
-                result = TTSAction.Result()
-                result.success = False
-                result.message = error_msg  
-                return result
             
         language = goal_handle.request.language
         if language == '':
