@@ -24,7 +24,7 @@ RUN python3 /scripts/clone_model.py tts_models/en/ljspeech/glow-tts
 
 # Copy package.xml files to trigger dependency installation
 COPY coqui_tts_ros2_interfaces/package.xml ${ROS_WS}/src/coqui_tts_ros2_interfaces/package.xml
-#COPY coqui_tts_ros2/package.xml ${ROS_WS}/src/coqui_tts_ros2/package.xml
+COPY coqui_tts_ros2/package.xml ${ROS_WS}/src/coqui_tts_ros2/package.xml
 
 RUN apt update \
  && rosdep update \
@@ -33,7 +33,7 @@ RUN apt update \
 
 # Copy source and build
 COPY coqui_tts_ros2_interfaces ${ROS_WS}/src/coqui_tts_ros2_interfaces
-#COPY coqui_tts_ros2 ${ROS_WS}/src/coqui_tts_ros2
+COPY coqui_tts_ros2 ${ROS_WS}/src/coqui_tts_ros2
 
 WORKDIR ${ROS_WS}
 RUN source /opt/ros/$ROS_DISTRO/setup.bash \
