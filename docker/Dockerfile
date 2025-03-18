@@ -19,6 +19,7 @@ RUN make install
 # Clone some models
 COPY scripts /scripts
 RUN python3 /scripts/clone_model.py tts_models/multilingual/multi-dataset/xtts_v2
+RUN python3 /scripts/clone_model.py tts_models/de/thorsten/tacotron2-DDC
 
 # Copy package.xml files to trigger dependency installation
 COPY coqui_tts_ros2_interfaces/package.xml ${ROS_WS}/src/coqui_tts_ros2_interfaces/package.xml
