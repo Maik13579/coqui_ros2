@@ -9,8 +9,16 @@ This package implements a ROS2 node for text-to-speech conversion using the [Coq
 
 ## Dependencies
 - Docker
+- Docker Nvidia
+- Alsa (aplay)
 
 ## Build
 ```bash
 docker/build.sh
+```
+
+## Usage
+Change ALSA_CARD in docker/compose.yaml, use aplay -l to find the card name.
+```bash
+docker compose -f docker/compose.yaml up
 ```
