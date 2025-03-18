@@ -10,6 +10,7 @@ ARG ROS_DISTRO
 ENV ROS_DISTRO=$ROS_DISTRO
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+ENV ROS_WS=/root/ros2_ws
 
 # Install locales, curl, gnupg, and lsb-release
 RUN apt-get update && apt-get install -y \
