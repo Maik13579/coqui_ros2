@@ -15,3 +15,20 @@ RUN pip3 install torch torchaudio --extra-index-url https://download.pytorch.org
 COPY TTS /root/TTS
 WORKDIR /root/TTS
 RUN make install
+
+# Copy package.xml files to trigger dependency installation
+COPY coqui_tts_ros2_interfaces/package.xml ${ROS_WS}/src/coqui_tts_ros2_interfaces/package.xml
+#COPY coqui_tts_ros2/package.xml ${ROS_WS}/src/coqui_tts_ros2/package.xml
+
+RUN apt update \
+ && rosdep update \
+ && rosdep install --from-paths ${ROS_WS}/src --ignore-src -r -y \
+ && rm -rf /var/lib/apt/lists/*
+
+# Copy source and build
+COPY coqui_tts_ros2_interfaces ${ROS_WS}/src/coqui_tts_ros2_interfaces
+#COPY coqui_tts_ros2 ${ROS_WS}/src/coqui_tts_ros2
+
+WORKDIR ${ROS_WS}
+RUN source /opt/ros/$ROS_DISTRO/setup.bash \
+ && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release

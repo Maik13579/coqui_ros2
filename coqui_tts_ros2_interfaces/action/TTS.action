@@ -1,0 +1,16 @@
+# Goal
+string text # Text to synthesize
+string language # Language code (e.g. en)
+string speaker_wave # Path to speaker wav file
+
+float32 wait_before_speaking # Wait before speaking in seconds
+
+---
+# Result
+
+bool success
+string message # Error message
+
+---
+# Feedback
+
