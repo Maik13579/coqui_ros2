@@ -12,7 +12,7 @@ CUDA_MAJOR=12
 CUDA_MINOR=6
 CUDA_PATCH=3
 ROS_DISTRO=humble
-IMAGE_TAG="coqui_ros2"
+IMAGE_TAG="coqui_tts_ros2"
 
 # Build Base image
 docker build -t ${IMAGE_TAG} \
