@@ -1,7 +1,14 @@
 # Goal
 string text # Text to speak
-string language # Language code (e.g. en)
-string speaker_wave # Path to speaker wav file
+string speaker # Speaker name for multi-speaker
+string language # Language of the text. If None, the default language of the speaker is used. Language is only supported by `XTTS` model.
+string speaker_wave # Path to a reference wav file to use for voice cloning with supporting models like YourTTS.
+string emotion # Emotion to use for Coqui Studio models. If None, Studio models use "Neutral". Defaults to None.
+float32 speed # Speed factor to use for Coqui Studio models, between 0 and 2.0. If None, Studio models use 1.0.
+
+bool dont_split_sentences # Deactivate split text into sentences, synthesize them separately and concatenate the file audio.
+# Setting it True uses more VRAM and possibly hit model specific text length or VRAM limits. Only
+# applicable to the TTS models. 
 
 float32 wait_before_speaking # Wait before speaking in seconds
 # actual wait time is wait_before_speaking - generation time
