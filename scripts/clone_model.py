@@ -20,4 +20,10 @@ if __name__ == '__main__':
     manager =  ModelManager(models_file=MODEL_FILE, progress_bar=True, verbose=False)
     print(f"Downloading {model_name}")
     model_path, config_path, model_item = manager.download_model(model_name)
+    if model_item.get("default_vocoder") is None:
+        print("Done")
+        exit(0)
+
+    print(f"Downloading {model_item['default_vocoder']}")
+    vocoder_path, vocoder_config_path, _ = manager.download_model(model_item["default_vocoder"])
     print("Done")
