@@ -80,9 +80,9 @@ class TTSNode(Node):
         if language == '':
             language = None
 
-        speaker_wave = goal_handle.request.speaker_wave
-        if speaker_wave == '':
-            speaker_wave = None
+        speaker_wav = goal_handle.request.speaker_wav
+        if speaker_wav == '':
+            speaker_wav = None
 
         emotion = goal_handle.request.emotion
         if emotion == '':
@@ -103,7 +103,7 @@ class TTSNode(Node):
                 self.tts.tts_to_file(text=text, 
                                      speaker=speaker,
                                      language=language,
-                                     speaker_wav=speaker_wave,
+                                     speaker_wav=speaker_wav,
                                      emotion=emotion,
                                      speed=speed,
                                      split_sentences=split_sentences,

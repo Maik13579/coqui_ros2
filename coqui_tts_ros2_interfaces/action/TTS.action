@@ -2,7 +2,7 @@
 string text # Text to speak
 string speaker # Speaker name for multi-speaker
 string language # Language of the text. If None, the default language of the speaker is used. Language is only supported by `XTTS` model.
-string speaker_wave # Path to a reference wav file to use for voice cloning with supporting models like YourTTS.
+string speaker_wav # Path to a reference wav file to use for voice cloning with supporting models like YourTTS.
 string emotion # Emotion to use for Coqui Studio models. If None, Studio models use "Neutral". Defaults to None.
 float32 speed # Speed factor to use for Coqui Studio models, between 0 and 2.0. If None, Studio models use 1.0.
 
