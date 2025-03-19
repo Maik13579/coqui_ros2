@@ -23,19 +23,34 @@ CUDA_MINOR=6
 CUDA_PATCH=3
 ROS_DISTRO=humble
 IMAGE_TAG="coqui_tts_ros2"
+DOWNLOAD_MODELS=true
 
 # Build Base image
-docker build -t ${IMAGE_TAG} \
+docker build -t ${IMAGE_TAG} --target base \
   --build-arg UBUNTU_MAJOR=${UBUNTU_MAJOR} \
   --build-arg UBUNTU_MINOR=${UBUNTU_MINOR} \
   --build-arg CUDA_MAJOR=${CUDA_MAJOR} \
   --build-arg CUDA_MINOR=${CUDA_MINOR} \
   --build-arg CUDA_PATCH=${CUDA_PATCH} \
   --build-arg ROS_DISTRO=${ROS_DISTRO} \
-  -f $PARENT_DIR/docker/Base.Dockerfile \
+  -f $PARENT_DIR/docker/Dockerfile \
   $PARENT_DIR
 
-docker build -t ${IMAGE_TAG} \
+#Build TTS
+docker build -t ${IMAGE_TAG} --target build_tts \
+  --build-arg BASE_IMAGE=${IMAGE_TAG} \
+  -f $PARENT_DIR/docker/Dockerfile \
+  $PARENT_DIR
+
+if $DOWNLOAD_MODELS; then
+  docker build -t ${IMAGE_TAG} --target download_models \
+    --build-arg BASE_IMAGE=${IMAGE_TAG} \
+    -f $PARENT_DIR/docker/Dockerfile \
+    $PARENT_DIR
+fi
+
+#Build  ros wrapper
+docker build -t ${IMAGE_TAG} --target build_ros \
   --build-arg BASE_IMAGE=${IMAGE_TAG} \
   -f $PARENT_DIR/docker/Dockerfile \
   $PARENT_DIR
