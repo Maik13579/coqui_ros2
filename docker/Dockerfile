@@ -81,6 +81,13 @@ COPY scripts /scripts
 RUN python3 /scripts/clone_model.py tts_models/en/ljspeech/glow-tts
 RUN python3 /scripts/clone_model.py tts_models/multilingual/multi-dataset/xtts_v2
 
+# Get voices for cloning
+RUN apt update && apt install -y git ffmpeg && rm -rf /var/lib/apt/lists/*
+WORKDIR /voices
+RUN git clone https://github.com/renandincer/libtrump.git
+# Convert all .mp3 files in /voices to .wav and remove the original .mp3 files
+RUN find /voices -type f -name "*.mp3" -exec sh -c 'ffmpeg -y -i "$1" "${1%.mp3}.wav" && rm -f "$1"' _ {} \;
+
 
 
 # Build roswrapper
