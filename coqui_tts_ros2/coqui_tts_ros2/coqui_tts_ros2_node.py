@@ -83,6 +83,10 @@ class TTSNode(Node):
         speaker_wav = goal_handle.request.speaker_wav
         if speaker_wav == '':
             speaker_wav = None
+        else:
+            if ';' in speaker_wav:
+                speaker_wav = speaker_wav.split(';')
+
 
         emotion = goal_handle.request.emotion
         if emotion == '':
