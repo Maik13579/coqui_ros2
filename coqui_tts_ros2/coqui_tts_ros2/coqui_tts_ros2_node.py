@@ -95,6 +95,7 @@ class TTSNode(Node):
 
         # Record time before generating audio.
         start_time = time.time()
+        self.tts_state_publisher.publish(Bool(data=True))
 
         # Create a temporary file
         with tempfile.NamedTemporaryFile(delete=True, suffix=".wav") as tmp_file:
@@ -120,6 +121,7 @@ class TTSNode(Node):
                 result = TTSAction.Result()
                 result.success = False
                 result.message = error_msg
+                self.tts_state_publisher.publish(Bool(data=False))
                 return result
             
             # Calculate generation time and wait for the remaining time if needed.
@@ -134,9 +136,7 @@ class TTSNode(Node):
             
             try: # Play audio using aplay
                 self.get_logger().info("Playing audio...")
-                self.tts_state_publisher.publish(Bool(data=True))
                 subprocess.run(["aplay", wav_path], check=True)
-                self.tts_state_publisher.publish(Bool(data=False))
                 self.get_logger().info("Audio played successfully.")
                 # Send feedback: AUDIO_PLAYED
                 feedback_msg.stage = TTSAction.Feedback.AUDIO_PLAYED
@@ -149,12 +149,14 @@ class TTSNode(Node):
                 result = TTSAction.Result()
                 result.success = False
                 result.message = error_msg
+                self.tts_state_publisher.publish(Bool(data=False))
                 return result
             
             goal_handle.succeed()
             result = TTSAction.Result()
             result.success = True
             result.message = "TTS conversion and playback completed."
+            self.tts_state_publisher.publish(Bool(data=False))
             return result
 
     def goal_callback(self, goal_request):
